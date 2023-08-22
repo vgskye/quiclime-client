@@ -22,25 +22,10 @@ jobs:
       - name: Install dependencies (Windows)
         if: matrix.platform == 'windows-2022'
         run: |
-          Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
-          choco install git msys2 visualstudio2022-workload-vctools python
-          python -m pip install --user pipx
-          python -m pipx ensurepath
-          pipx install gvsbuild
-      - name: Move git binary (Windows)
-        if: matrix.platform == 'windows-2022'
-        run: |
-          Move-Item "C:\Program Files\Git\usr\bin" "C:\Program Files\Git\usr\notbin"
-          Move-Item "C:\Program Files\Git\bin" "C:\Program Files\Git\notbin"
-      - name: Build GTK4 (Windows)
-        if: matrix.platform == 'windows-2022'
-        run: > # Use -j2 option to prevent out of memory errors with GitHub Action runners
-          gvsbuild build --ninja-opts -j2 gtk4
-      - name: Restore git binary (Windows)
-        run: |
-          Move-Item "C:\Program Files\Git\usr\notbin" "C:\Program Files\Git\usr\bin"
-          Move-Item "C:\Program Files\Git\notbin" "C:\Program Files\Git\bin"
-          $env:Path = "C:\gtk-build\gtk\x64\release\bin;" + $env:Path
+          git clone https://github.com/Microsoft/vcpkg.git
+          .\vcpkg\bootstrap-vcpkg.bat
+          vcpkg install gtk4
+          vcpkg integrate install
       - name: Install dependencies (Ubuntu)
         if: matrix.platform == 'ubuntu-22.04'
         run: |

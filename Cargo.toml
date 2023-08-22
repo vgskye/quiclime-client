@@ -1,0 +1,16 @@
+[package]
+name = "quiclime-client"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+quinn = "0.10.2"
+relm4 = "0.6.1"
+reqwest = { version = "0.11.19", default-features = false, features = ["rustls-tls-native-roots", "json"] }
+serde = { version = "1.0.185", features = ["derive"] }
+serde_json = "1.0.105"
+tokio = "1.32.0"
+rustls = "*"
+rustls-native-certs = "*"

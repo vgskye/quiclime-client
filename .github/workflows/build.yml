@@ -22,8 +22,8 @@ jobs:
       - name: Install dependencies (Windows)
         if: matrix.platform == 'windows-2022'
         run: |
-          git clone https://github.com/Microsoft/vcpkg.git
-          .\vcpkg\bootstrap-vcpkg.bat
+          irm get.scoop.sh | iex
+          scoop install vcpkg pkg-config
           vcpkg install gtk4
           vcpkg integrate install
       - name: Install dependencies (Ubuntu)

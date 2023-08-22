@@ -22,7 +22,7 @@ jobs:
       - name: Install dependencies (Windows)
         if: matrix.platform == 'windows-2022'
         run: |
-          irm get.scoop.sh | iex
+          iex "& {$(irm get.scoop.sh)} -RunAsAdmin"
           scoop install vcpkg pkg-config
           vcpkg install gtk4
           vcpkg integrate install
